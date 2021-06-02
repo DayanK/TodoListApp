@@ -1,0 +1,37 @@
+extends layout  
+
+block content 
+   .row
+    .col-md-4
+       .card 
+            .card-header 
+                h3 Add a task
+            .card-body 
+                form(action="/addTask", method="POST")  
+                    .form-group
+                    .form-group
+                        label(for='todo') Add a task
+                        input.form-control#todo(type='text', name="title")
+                    button(type="submit").btn.btn-primary.btn-block
+                        | Add
+                        i.fas.fa-plus.pl-1
+    .col-md-8   
+        table.table.table-striped
+            thead
+                tr
+                    th(scope='col') Id
+                    th(scope='col') Todo
+                    th(scope='col') Edit
+                    th(scope='col') Delete
+            tbody
+                each todo in todos
+                    tr
+                        th(scope='row')= todo.id
+                        td=todo.title 
+                        td 
+                            a(href='/editTask/' + todo.id).btn.btn-info.btn-sm
+                                i.fas.fa-pencil-alt
+                        td 
+                            form(method='POST', action="/deleteTask/" + todo.id + "?_method=DELETE") 
+                                button(type='submit').btn.btn-danger.btn-sm
+                                    i.fas.fa-trash-alt
